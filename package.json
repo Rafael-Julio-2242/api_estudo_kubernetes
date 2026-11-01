@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Notes REST API — Kubernetes study project",
   "type": "module",
-  "engines": { "node": ">=22.0.0" },
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "tsx watch src/main.ts",
     "build": "tsc && node scripts/copy-migrations.mjs",
@@ -29,6 +31,7 @@
     "@typescript-eslint/parser": "^8.0.0",
     "@vitest/coverage-v8": "^2.0.0",
     "eslint": "^9.0.0",
+    "node-gyp": "^13.1.0",
     "prettier": "^3.0.0",
     "tsx": "^4.0.0",
     "typescript": "^5.5.0",
