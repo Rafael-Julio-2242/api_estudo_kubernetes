@@ -8,6 +8,8 @@ import { registerVersionRoute } from './routes/version.js'
 import { makeAuthenticate } from './auth/hooks.js'
 import { registerAuthRoutes } from './routes/auth.js'
 import { registerMeRoute } from './routes/me.js'
+import { registerNotesRoutes } from './routes/notes.js'
+import { registerAdminRoutes } from './routes/admin.js'
 
 export interface AppDeps {
   db: Database.Database
@@ -59,6 +61,8 @@ export async function buildApp(config: Config, deps: AppDeps): Promise<FastifyIn
   registerVersionRoute(app, config, depsWithAuth)
   await registerAuthRoutes(app, config, depsWithAuth)
   registerMeRoute(app, depsWithAuth)
+  registerNotesRoutes(app, depsWithAuth)
+  registerAdminRoutes(app, config, depsWithAuth)
 
   return app
 }

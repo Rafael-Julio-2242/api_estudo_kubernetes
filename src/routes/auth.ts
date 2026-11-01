@@ -4,7 +4,6 @@ import type { AppDeps } from '../app.js'
 import type { Config } from '../config.js'
 import { AppError } from '../errors.js'
 import { registerUser, loginUser, scopesForRole, initDummyHash } from '../auth/local.js'
-import { requireScope } from '../auth/hooks.js'
 
 const registerSchema = z.object({
   email: z.string().email(),
@@ -30,10 +29,6 @@ export async function registerAuthRoutes(
     })
     app.get('/.well-known/jwks.json', async (_req, reply) => {
       await reply.status(404).send({ error: 'not_found', message: 'not available in OIDC mode' })
-    })
-    // Stub /notes for scope tests — still needs auth even in OIDC mode
-    app.get('/notes', { preHandler: [deps.authenticate, requireScope('notes:read')] }, async (_req, reply) => {
-      await reply.send({ items: [] })
     })
     return
   }
@@ -77,8 +72,4 @@ export async function registerAuthRoutes(
     })
   }
 
-  // Stub GET /notes — requires notes:read scope. Task 9 will replace this with full implementation.
-  app.get('/notes', { preHandler: [deps.authenticate, requireScope('notes:read')] }, async (_req, reply) => {
-    await reply.send({ items: [] })
-  })
 }
