@@ -6,6 +6,8 @@ import { errorHandler } from './errors.js'
 import { registerHealthRoutes } from './routes/health.js'
 import { registerVersionRoute } from './routes/version.js'
 import { makeAuthenticate } from './auth/hooks.js'
+import { registerAuthRoutes } from './routes/auth.js'
+import { registerMeRoute } from './routes/me.js'
 
 export interface AppDeps {
   db: Database.Database
@@ -49,10 +51,14 @@ export async function buildApp(config: Config, deps: AppDeps): Promise<FastifyIn
     void reply.status(404).send({ error: 'not_found', message: 'route not found' })
   })
 
-  app.decorate('authenticate', makeAuthenticate(config, deps))
+  const authenticate = makeAuthenticate(config, deps)
+  app.decorate('authenticate', authenticate)
+  const depsWithAuth = { ...deps, authenticate }
 
-  registerHealthRoutes(app, deps)
-  registerVersionRoute(app, config, deps)
+  registerHealthRoutes(app, depsWithAuth)
+  registerVersionRoute(app, config, depsWithAuth)
+  await registerAuthRoutes(app, config, depsWithAuth)
+  registerMeRoute(app, depsWithAuth)
 
   return app
 }
