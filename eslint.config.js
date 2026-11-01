@@ -9,7 +9,7 @@ export default tseslint.config(
       '@typescript-eslint/no-floating-promises': 'error',
     },
     languageOptions: {
-      parserOptions: { project: './tsconfig.json' },
+      parserOptions: { project: './tsconfig.eslint.json' },
     },
   },
   {
