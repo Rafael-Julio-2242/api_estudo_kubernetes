@@ -89,8 +89,11 @@ async function main(): Promise<void> {
       await new Promise((r) => setTimeout(r, config.shutdownDelaySeconds * 1000))
     }
 
-    await app.close()
-    db.close()
+    try {
+      await app.close()
+    } finally {
+      db.close()
+    }
     clearTimeout(safetyTimeout)
     app.log.info('Shutdown complete')
     process.exit(0)
