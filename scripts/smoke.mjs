@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // scripts/smoke.mjs — no external dependencies
 
-const BASE_URL = process.env.BASE_URL ?? 'http://localhost:8080'
+const BASE_URL = (process.env.BASE_URL ?? 'http://localhost:8080').replace(/\/$/, '')
 const EXPECT_SHA = process.env.EXPECT_SHA
 const EXPECT_ENV = process.env.EXPECT_ENV
 const EXPECT_VERSION = process.env.EXPECT_VERSION
@@ -25,12 +25,14 @@ async function fetchWithTimeout(url, opts = {}) {
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS)
   try {
-    const fetchOpts = { ...opts, signal: controller.signal }
-    if (SMOKE_INSECURE && process.versions.node) {
-      // Node 22: use --insecure flag or custom dispatcher
-      // Simple approach: set env NODE_TLS_REJECT_UNAUTHORIZED=0 before running
+    const res = await fetch(url, { ...opts, signal: controller.signal })
+    const text = await res.text()
+    return {
+      status: res.status,
+      headers: res.headers,
+      text,
+      json: () => JSON.parse(text),
     }
-    return await fetch(url, fetchOpts)
   } finally {
     clearTimeout(timer)
   }
