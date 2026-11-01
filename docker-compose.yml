@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      args:
+        APP_VERSION: local
+        GIT_SHA: dev
+    image: notes-api:local
+    ports:
+      - "8080:8080"
+    volumes:
+      - notes-data:/data
+    environment:
+      AUTH_MODE: local
+      JWT_ALG: HS256
+      JWT_SECRET: local-dev-secret-change-me-in-production!!
+      LOG_LEVEL: debug
+      APP_ENV: local
+    restart: unless-stopped
+
+volumes:
+  notes-data:
