@@ -1,0 +1,9 @@
+node_modules
+dist
+reports
+.git
+*.db
+.env
+*.env.local
+test
+docs
