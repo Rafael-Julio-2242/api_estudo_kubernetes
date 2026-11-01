@@ -3,6 +3,7 @@ import { openDatabase } from '../src/db/connection.js'
 import { runMigrations } from '../src/db/migrate.js'
 import { buildApp } from '../src/app.js'
 import { createJwtSigner } from '../src/auth/jwt.js'
+import { createOidcSigner } from '../src/auth/oidc.js'
 import { join } from 'node:path'
 
 export const TEST_SECRET = 'test-secret-must-be-at-least-32-chars!!'
@@ -39,7 +40,10 @@ export async function createTestApp(overrides: Partial<Config> = {}) {
   const config = makeConfig(overrides)
   const db = openDatabase(':memory:')
   runMigrations(db, join(process.cwd(), 'migrations'))
-  const jwtSigner = await createJwtSigner(config)
+  const jwtSigner =
+    config.authMode === 'oidc' && config.oidcJwksUrl
+      ? createOidcSigner(config)
+      : await createJwtSigner(config)
   const shuttingDown = { value: false }
   const startedAt = new Date().toISOString()
   const authenticate = async (_request: unknown, _reply: unknown) => {
