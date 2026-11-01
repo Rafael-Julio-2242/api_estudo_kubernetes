@@ -7,9 +7,10 @@ export function createOidcSigner(config: Config): JwtSigner {
 
   function getJwks(): ReturnType<typeof createRemoteJWKSet> {
     if (!jwks) {
-      const jwksUrl =
-        config.oidcJwksUrl ?? `${config.jwtIssuer}/.well-known/openid-configuration`
-      jwks = createRemoteJWKSet(new URL(jwksUrl))
+      if (!config.oidcJwksUrl) {
+        throw new Error('oidcJwksUrl is required when authMode is oidc')
+      }
+      jwks = createRemoteJWKSet(new URL(config.oidcJwksUrl))
     }
     return jwks
   }
