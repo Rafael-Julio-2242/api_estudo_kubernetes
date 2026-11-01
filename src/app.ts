@@ -5,6 +5,7 @@ import type { JwtSigner } from './auth/jwt.js'
 import { errorHandler } from './errors.js'
 import { registerHealthRoutes } from './routes/health.js'
 import { registerVersionRoute } from './routes/version.js'
+import { makeAuthenticate } from './auth/hooks.js'
 
 export interface AppDeps {
   db: Database.Database
@@ -48,7 +49,7 @@ export async function buildApp(config: Config, deps: AppDeps): Promise<FastifyIn
     void reply.status(404).send({ error: 'not_found', message: 'route not found' })
   })
 
-  app.decorate('authenticate', deps.authenticate)
+  app.decorate('authenticate', makeAuthenticate(config, deps))
 
   registerHealthRoutes(app, deps)
   registerVersionRoute(app, config, deps)
