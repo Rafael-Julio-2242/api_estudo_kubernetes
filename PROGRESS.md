@@ -2,61 +2,61 @@
 
 Spec: `docs/superpowers/specs/2026-11-01-notes-api-design.md`
 
-## Pass 1: Core API (current)
+## Pass 1: Core API ✅ complete
 
 ### Infra / Config
-- [ ] `.nvmrc`, `.gitignore`, `.dockerignore`, `.env.example`
-- [ ] `package.json` (scripts, deps, engines)
-- [ ] `tsconfig.json`
-- [ ] `eslint.config.js` + `.prettierrc`
-- [ ] `src/config.ts` — zod env validation, _FILE variants, fail-fast
+- [x] `.nvmrc`, `.gitignore`, `.dockerignore`, `.env.example`
+- [x] `package.json` (scripts, deps, engines)
+- [x] `tsconfig.json`
+- [x] `eslint.config.js` + `.prettierrc`
+- [x] `src/config.ts` — zod env validation, _FILE variants, fail-fast
 
 ### Database
-- [ ] `migrations/0001_init.sql` — users + notes schema
-- [ ] `src/db/connection.ts` — open SQLite (WAL, FK, busy_timeout)
-- [ ] `src/db/migrate.ts` — runner with schema_migrations table
+- [x] `migrations/0001_init.sql` — users + notes schema
+- [x] `src/db/connection.ts` — open SQLite (WAL, FK, busy_timeout)
+- [x] `src/db/migrate.ts` — runner with schema_migrations table
 
 ### Errors
-- [ ] `src/errors.ts` — AppError + Fastify setErrorHandler
+- [x] `src/errors.ts` — AppError + Fastify setErrorHandler
 
 ### Auth
-- [ ] `src/auth/password.ts` — argon2id hash/verify + dummy hash
-- [ ] `src/auth/jwt.ts` — sign/verify facade (HS256 + RS256)
-- [ ] `src/auth/hooks.ts` — authenticate hook, requireScope, requireRole
-- [ ] `src/auth/local.ts` — register + login business logic
-- [ ] `src/auth/oidc.ts` — lazy JWKS discovery, 503 on IdP down
+- [x] `src/auth/password.ts` — argon2id hash/verify + dummy hash
+- [x] `src/auth/jwt.ts` — sign/verify facade (HS256 + RS256)
+- [x] `src/auth/hooks.ts` — authenticate hook, requireScope, requireRole
+- [x] `src/auth/local.ts` — register + login business logic
+- [x] `src/auth/oidc.ts` — lazy JWKS discovery, 503 on IdP down
 
 ### Services
-- [ ] `src/services/users.ts` — DB queries
-- [ ] `src/services/notes.ts` — DB queries
+- [x] `src/services/users.ts` — DB queries
+- [x] `src/services/notes.ts` — DB queries
 
 ### Routes
-- [ ] `src/routes/health.ts` — /health/live + /health/ready
-- [ ] `src/routes/version.ts` — /version
-- [ ] `src/routes/auth.ts` — /auth/register, /auth/token, /.well-known/jwks.json
-- [ ] `src/routes/me.ts` — /me
-- [ ] `src/routes/notes.ts` — CRUD
-- [ ] `src/routes/admin.ts` — /admin/stats
+- [x] `src/routes/health.ts` — /health/live + /health/ready
+- [x] `src/routes/version.ts` — /version
+- [x] `src/routes/auth.ts` — /auth/register, /auth/token, /.well-known/jwks.json
+- [x] `src/routes/me.ts` — /me
+- [x] `src/routes/notes.ts` — CRUD
+- [x] `src/routes/admin.ts` — /admin/stats
 
 ### App wiring
-- [ ] `src/app.ts` — buildApp(config, deps)
-- [ ] `src/main.ts` — startup sequence + graceful shutdown
+- [x] `src/app.ts` — buildApp(config, deps)
+- [x] `src/main.ts` — startup sequence + graceful shutdown
 
 ### Ops
-- [ ] `Dockerfile` — multi-stage, UID 10001, ARG APP_VERSION/GIT_SHA
-- [ ] `docker-compose.yml` — api service (local mode, named volume)
-- [ ] `scripts/smoke.mjs` — health + version + auth checks
+- [x] `Dockerfile` — multi-stage, UID 10001, ARG APP_VERSION/GIT_SHA
+- [x] `docker-compose.yml` — api service (local mode, named volume)
+- [x] `scripts/smoke.mjs` — health + version + auth checks
 
 ### Tests
-- [ ] `test/config.test.ts`
-- [ ] `test/health.test.ts`
-- [ ] `test/auth.local.test.ts`
-- [ ] `test/auth.oidc.test.ts`
-- [ ] `test/notes.test.ts`
-- [ ] `test/admin.test.ts`
+- [x] `test/config.test.ts`
+- [x] `test/health.test.ts`
+- [x] `test/auth.local.test.ts`
+- [x] `test/auth.oidc.test.ts`
+- [x] `test/notes.test.ts`
+- [x] `test/admin.test.ts`
 
 ### Docs
-- [ ] `README.md` — env vars, commands, curl examples, infra contract
+- [x] `README.md` — env vars, commands, curl examples, infra contract
 
 ---
 
