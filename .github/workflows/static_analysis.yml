@@ -18,7 +18,9 @@ jobs:
         run: npm run lint
 
       - name: Format Check
+        if: always()
         run: npm run format:check
 
       - name: Typecheck
+        if: always()
         run: npm run typecheck
