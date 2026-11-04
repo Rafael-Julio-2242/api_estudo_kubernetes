@@ -9,7 +9,8 @@ jobs:
       - uses: ./.github/actions/setup
       - name: Lint
         run: npm run lint
-      - name: Format Check
+      - name: Format Check.
+        if: always()
         run: npm run format:check
   typecheck:
     runs-on: ubuntu-latest
